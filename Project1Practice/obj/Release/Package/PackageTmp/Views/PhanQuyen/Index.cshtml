@@ -1,0 +1,55 @@
+﻿@model IEnumerable<Project1Practice.Models.LoaiThanhVien>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Layout/AdminLayout.cshtml";
+    //Khởi tạo control WebGrid
+    WebGrid grid = new WebGrid(source: Model, rowsPerPage: 20);
+}
+<p class="home"><a href="#">Quản lý</a> > <strong> Quản lý Phân Quyền</strong></p>
+<br />
+<h2>PHÂN QUYỀN</h2>
+<p>
+    @Html.ActionLink("Thêm Loại Thành Viên", "TaoMoi", null, new { @class = "btn btn-warning" })
+</p>
+<br />
+<br />
+@*Thể hiện dữ liệu thông qua control WebGrid*@
+@grid.GetHtml(
+    tableStyle: "divTable",
+    headerStyle: "gridHead",
+    footerStyle: "gridFooter",
+    rowStyle: "gridRow",
+    alternatingRowStyle: "gridAltRow",
+    columns: grid.Columns(
+    grid.Column("MaLoaiTV", "Mã Loại Thành Viên"),
+    grid.Column("TenLoai", "Loại Thành Viên"),
+    grid.Column("UuDai", "Ưu Đãi"),
+    grid.Column(format: p => @Html.ActionLink("Phân Qyền", "PhanQuyen", new { id = p.MaLoaiTV }))
+    )
+)
+
+@*Css cho từng Style của table*@
+<style>
+    .divTable {
+        width: 100%;
+        border: 1px solid black;
+    }
+
+        .divTable td {
+            border: 1px black solid;
+        }
+
+    .gridHead {
+        background-color: orange;
+    }
+
+        .gridHead > th > a {
+            color: #fff
+        }
+
+    .gridFooter {
+        font-weight: bold;
+    }
+</style>
+

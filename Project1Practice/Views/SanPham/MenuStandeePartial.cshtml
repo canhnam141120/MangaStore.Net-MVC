@@ -1,0 +1,109 @@
+﻿@using Project1Practice.Models
+@model IEnumerable<Truyen>
+
+@{ IEnumerable<SanPham> spTop = (IEnumerable<SanPham>)ViewBag.spTop;}
+
+
+<div class="col-md-3 product-price">
+    <div class=" rsidebar span_1_of_left">
+        <div class="of-left">
+            <h3 class="cate">THỂ LOẠI</h3>
+        </div>
+        <ul class="menu">
+            @foreach (var groupItem in Model.GroupBy(n => n.LoaiSanPham))
+            {
+                <li class="item1">
+                    <a href="@Url.Action("SanPham","SanPham", new {@MaLoaiSP = groupItem.Key.MaLoaiSP})">@groupItem.Key.TenLoai</a>
+                    <ul class="cute" style="display: none;">
+                        @foreach (var item in groupItem.OrderBy(n=>n.TenTruyen))
+                        {
+                         <li><a href="@Url.Action("SanPhamByType","SanPham", new {@MaTruyen = item.MaTruyen})">@item.TenTruyen</a></li>
+                        }
+                    </ul>
+                </li>
+            }
+
+        </ul>
+    </div>
+    <!--initiate accordion-->
+    <script type="text/javascript">
+        $(function () {
+            var menu_ul = $('.menu > li > ul'),
+                menu_a = $('.menu > li > a');
+            menu_ul.hide();
+            menu_a.click(function (e) {
+                e.preventDefault();
+                if (!$(this).hasClass('active')) {
+                    menu_a.removeClass('active');
+                    menu_ul.filter(':visible').slideUp('normal');
+                    $(this).addClass('active').next().stop(true, true).slideDown('normal');
+                } else {
+                    $(this).removeClass('active');
+                    $(this).next().stop(true, true).slideUp('normal');
+                }
+            });
+
+        });
+    </script>
+    <!---->
+    <div class="product-middle">
+        <div class="fit-top">
+            <h6 class="shop-top">Truyện hay</h6>
+            <a href="@Url.Action("SanPhamAll","SanPham")" class="shop-now">Mua ngay</a>
+            <div class="clearfix"> </div>
+        </div>
+    </div>
+    <br />
+    <!---->
+    <div class="product-bottom">
+        <div class="of-left-in">
+            <h3 class="best">Bán chạy nhất</h3>
+        </div>
+        <div class="product-go">
+            <div class=" fashion-grid">
+
+                <a href="@Url.Action("ChiTietSanPham","SanPham", new {@MaSP = spTop.ElementAt(0).MaSP})"><img style="height:150px;width:100px;border:1px black solid;" src="@Url.Content("~/Content/HinhAnhSP/"+spTop.ElementAt(0).HinhAnh)" alt=""></a>
+
+            </div>
+            <div class=" fashion-grid1">
+                <h6 class="best2">
+                    <a href="@Url.Action("ChiTietSanPham","SanPham", new {@MaSP = spTop.ElementAt(0).MaSP})">
+                        @spTop.ElementAt(0).MoTa
+                    </a>
+                </h6>
+
+                <span class=" price-in1">@spTop.ElementAt(0).DonGia.Value.ToString("#,##") VNĐ</span>
+            </div>
+
+            <div class="clearfix"> </div>
+        </div>
+        <div class="product-go">
+            <div class=" fashion-grid">
+                <a href="@Url.Action("ChiTietSanPham","SanPham", new {@MaSP = spTop.ElementAt(1).MaSP})"><img style="height:150px;width:100px;border:1px black solid;" src="@Url.Content("~/Content/HinhAnhSP/"+spTop.ElementAt(1).HinhAnh)" alt=""></a>
+
+            </div>
+            <div class="fashion-grid1">
+                <h6 class="best2">
+                    <a href="@Url.Action("ChiTietSanPham","SanPham", new {@MaSP = spTop.ElementAt(1).MaSP})">
+                        @spTop.ElementAt(1).MoTa
+                    </a>
+                </h6>
+
+                <span class=" price-in1">@spTop.ElementAt(1).DonGia.Value.ToString("#,##") VNĐ</span>
+            </div>
+
+            <div class="clearfix"> </div>
+        </div>
+
+    </div>
+    <div class=" per1">
+        <a href="#">
+            <img class="img-responsive" src="@Url.Content("~/Content/HinhAnhSP/mangastore.png")" alt="">
+            <div class="six1">
+                <h4>DISCOUNT</h4>
+                <p>Up to</p>
+                <span>30%</span>
+            </div>
+        </a>
+    </div>
+</div>

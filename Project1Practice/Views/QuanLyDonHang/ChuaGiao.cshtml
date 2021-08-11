@@ -1,0 +1,64 @@
+﻿@model IEnumerable<Project1Practice.Models.DonDatHang>
+
+@{
+    ViewBag.Title = "Chưa Giao";
+    Layout = "~/Views/Layout/AdminLayout.cshtml";
+    //Khởi tạo control WebGrid
+    WebGrid grid = new WebGrid(source: Model, rowsPerPage: 20);
+}
+<p class="home"><a href="#">Quản lý</a> > <strong> Quản lý Đơn Đặt Hàng</strong></p>
+<br />
+<h2>QUẢN LÝ ĐƠN ĐẶT HÀNG CHƯA GIAO</h2>
+<br />
+@*Dùng bootstrap tạo 1 tab conrol vs các liên kết đến các view khác*@
+<ul class="nav nav-tabs">
+    <li role="presentation"><a href="@Url.Action("ChuaThanhToan","QuanLyDonHang")">Chưa thanh toán</a></li>
+    <li role="presentation" class="active"><a href="@Url.Action("ChuaGiao","QuanLyDonHang")">Chưa giao & Đã thanh toán</a></li>
+    <li role="presentation"><a href="@Url.Action("DaGiaoDaThanhToan","QuanLyDonHang")">Đã giao & Đã thanh toán</a></li>
+</ul>
+
+@*Thể hiện dữ liệu thông qua control WebGrid*@
+@grid.GetHtml(
+    tableStyle: "divTable",
+    headerStyle: "gridHead",
+    footerStyle: "gridFooter",
+    rowStyle: "gridRow",
+    alternatingRowStyle: "gridAltRow",
+    columns: grid.Columns(
+    grid.Column("MaDDH", header: "Mã đơn hàng"),
+    grid.Column("MaKH", header: "Họ Tên KH", format: p => p.MaKH != null ? p.KhachHang.TenKH : ""), //Dùng toán tử 3 ngôi
+    grid.Column("NgayDat", header: "Ngày đặt"),
+    grid.Column("TinhTrangGiaoHang", header: "Tình trạng giao"),
+    grid.Column("NgayGiao", header: "Ngày giao"),
+    grid.Column("DaThanhToan", header: "Đã thanh toán"),
+    grid.Column("UuDai", header: "Ưu đãi"),
+    grid.Column("DaHuy", header: "Đã hủy"),
+    grid.Column(format: p => @Html.ActionLink("Duyệt đơn hàng", "DuyetDonHang", new { id = p.MaDDH }, new { @target = "_blank" }))
+    )
+)
+
+@*Css cho từng Style của table*@
+<style>
+    .divTable {
+        width: 100%;
+        border: 1px solid black;
+    }
+
+        .divTable td {
+            border: 1px black solid;
+        }
+
+    .gridHead {
+        background-color: orange;
+    }
+
+        .gridHead > th > a {
+            color: #fff
+        }
+
+    .gridFooter {
+        font-weight: bold;
+    }
+</style>
+
+

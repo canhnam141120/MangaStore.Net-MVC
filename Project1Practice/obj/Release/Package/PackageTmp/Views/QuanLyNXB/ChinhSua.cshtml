@@ -1,0 +1,48 @@
+﻿@model Project1Practice.Models.NhaXuatBan
+
+@{
+    ViewBag.Title = "ChinhSua";
+    Layout = "~/Views/Layout/AdminLayout.cshtml";
+}
+<p class="home"><a href="#">Quản lý</a> > <strong> Quản lý Nhà Xuất Bản</strong></p>
+<br />
+<h2>CHỈNH SỬA NHÀ XUẤT BẢN</h2>
+
+@using (Html.BeginForm("ChinhSua", "QuanLyNXB", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <hr />
+
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.Hidden("MaNXB", Model.MaNXB)
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.TenNXB, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-5">
+            @Html.EditorFor(model => model.TenNXB, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.TenNXB, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.ThongTin, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-5">
+            @Html.EditorFor(model => model.ThongTin, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.ThongTin, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Lưu" class="btn btn-warning" />
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    @Html.ActionLink("Quay lại", "Index", new { @class = "btn btn-warning" })
+</div>
+

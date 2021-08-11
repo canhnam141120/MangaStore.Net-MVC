@@ -1,0 +1,28 @@
+﻿@using Project1Practice.Models
+@{
+    Layout = "~/Views/Layout/HomeLayout.cshtml";
+}
+@{ IEnumerable<SanPham> listHOT = (IEnumerable<SanPham>)ViewBag.listHOT;}
+@{ IEnumerable<SanPham> listSPM = (IEnumerable<SanPham>)ViewBag.listSPM;}
+
+
+<div class="container" style="padding:0px">
+    <div class="content-top">
+        <h1>TRUYỆN HOT</h1>
+        @*Cách 1*@
+        @Html.Partial("~/Views/SanPham/SanPhamStyle1Partial.cshtml", listHOT)
+    </div>
+</div>
+@*Cách 2*@
+@*@Html.Action("SanPhamPartial")*@
+
+<div class="container" style="padding:0px">
+    <div class="content-top">
+        <h1>TRUYỆN MỚI NHẤT</h1>
+        @Html.Partial("~/Views/SanPham/SanPhamStyle2Partial.cshtml", listSPM)
+    </div>
+</div>
+<br />
+<br />
+
+

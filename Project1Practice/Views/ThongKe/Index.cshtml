@@ -1,0 +1,44 @@
+﻿<div class="list_of_members">
+    <div class="sales">
+        <i class="dollar" style="float:left"></i>
+        <div class="icon-text">
+            @{ decimal TongDoanhThu = decimal.Parse(ViewBag.TongDoanhThu.ToString());}
+            <h3 style="font-size:20px;">@TongDoanhThu.ToString("#,##") VNĐ</h3>
+            <p style="font-size:20px;">Tổng doanh thu</p>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+
+    <div class="orders">
+        <i class="order" style="float:left"></i>
+        <div class="icon-text">
+            <h3>@ViewBag.TongDDH</h3>
+            <p>Đơn đặt hàng</p>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="new-users" style="background: #FFC907">
+        <i class="user1" style="float:left"></i>
+        <div class="icon-text">
+            <h3>@ViewBag.TongTV</h3>
+            <p>Thành viên</p>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="new-users">
+        <i class="user1" style="float:left"></i>
+        <div class="icon-text">
+            <h3>@ViewBag.SoLuongNguoiDangOnline</h3>
+            <p>Đang Online</p>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="visitors">
+        <i class="visit" style="float:left"></i>
+        <div class="icon-text">
+            <h3>@ViewBag.SoNguoiTruyCap</h3>
+            <p>Đang truy cập</p>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>

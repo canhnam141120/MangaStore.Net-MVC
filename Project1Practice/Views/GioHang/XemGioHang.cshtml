@@ -1,0 +1,240 @@
+﻿@using Project1Practice.Models
+@model IEnumerable<ItemGioHang>
+
+@{
+    ViewBag.Title = "XemGioHang";
+    Layout = "~/Views/Layout/ProductLayout.cshtml";
+}
+
+@if (Model.Count() <= 0 || Model == null)
+{
+    <h2 style="color:red;">Giỏ hàng trống!</h2>
+}
+else
+{
+    <table class="table">
+        <tr>
+            <td>Mã SP</td>
+            <td>Tên SP</td>
+            <td>Hình ảnh</td>
+            <td>Số lượng</td>
+            <td>Đơn giá</td>
+            <td>Thành tiền</td>
+            <td>Thay đổi số lượng</td>
+            <td>Xóa sản phẩm</td>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.MaSP</td>
+                <td>@item.TenSP</td>
+                <td><img width="100px" height="150xp" src="@Url.Content("~/Content/HinhAnhSP/" + item.HinhAnh)" /></td>
+                <td>@item.SoLuong</td>
+                <td>@item.DonGia.ToString("#,##") VNĐ</td>
+                <td>@item.ThanhTien.ToString("#,##") VNĐ</td>
+                <td>@Html.ActionLink("Thay đổi", "SuaGioHang", new { @MaSP = item.MaSP })</td>
+                <td>@Html.ActionLink("Xóa", "XoaGioHang", new { @MaSP = item.MaSP })</td>
+            </tr>
+        }
+    </table>
+
+
+
+    using (Html.BeginForm("DatHang", "GioHang"))
+    {
+        if (Session["TaiKhoan"] == null)
+        {
+            <div class="ThongTinMuaHang">
+                <table align="center" class="table">
+                    <tr>
+                        <td></td>
+                        <td colspan="2"><b>Thông tin khách hàng</b></td>
+                    </tr>
+                    <tr>
+                        <td>Họ và Tên</td>
+                        <td>
+                            @Html.TextBox("TenKH")
+                            <p style="color:red;" id="TB_TenKH"></p>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Email</td>
+                        <td>
+                            @Html.TextBox("Email")
+                            <p style="color:red;" id="TB_Email"></p>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Địa chỉ</td>
+                        <td>
+                            @Html.TextBox("DiaChi")
+                            <p style="color:red;" id="TB_DiaChi"></p>
+                        </td>
+                    </tr>
+                    >
+                    <tr>
+                        <td>Số điện thoại</td>
+                        <td>
+                            @Html.TextBox("SoDienThoai")
+                            <p style="color:red;" id="TB_SoDienThoai"></p>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            @*Validation bằng JQuery*@
+            <script>
+                $('#btnDatHang').click(function () {
+                    var loi = 0;
+
+                    if ($("#TenKH").val() == "") {
+                        $("#TB_TenKH").text("Tên khách hàng không được bỏ trống!");
+                        loi++;
+                    } else {
+                        $("#TB_TenKH").text("");
+                    }
+
+                    dinhdang = /^[0-9A-Za-z]+[0-9A-Z-a-z_]*@@[\w\d.]+\.\w{2,4}$/;
+                    KTemail = dinhdang.test($('#Email').val());
+                    if (!KTemail) {
+                        $("#TB_Email").text("Email không hợp lệ!");
+                        loi++;
+                    } else {
+                        $("#TB_Email").text("");
+                    }
+
+                    if ($("#DiaChi").val() == "") {
+                        $("#TB_DiaChi").text("Địa chỉ không được bỏ trống!");
+                        loi++;
+                    } else {
+                        $("#TB_DiaChi").text("");
+                    }
+
+                    if ($("#SoDienThoai").val() == "") {
+                        $("#TB_SoDienThoai").text("Số điện thoại không được bỏ trống!");
+                        loi++;
+                    } else {
+                        $("#TB_SoDienThoai").text("");
+                    }
+
+                    if (loi != 0) {
+                        //Ngăn sự truyền submit đến server
+                        return false;
+                    }
+                });
+
+            </script>
+        }
+        <div class="divDatHang" style="text-align:right;">
+            <input id="btnDatHang" type="submit" value="ĐẶT HÀNG" style="margin-bottom:20px;" />
+            <br />
+            <a class="btn btn-warning" href="@Url.Action("Index", "Home")">Mua tiếp</a>
+        </div>
+    }
+}
+
+
+
+
+@*<div class="check">
+        <h1>Giỏ hàng của tôi (2)</h1>
+        <div class="col-md-9 cart-items">
+
+            <script>
+                $(document).ready(function (c) {
+                    $('.close1').on('click', function (c) {
+                        $('.cart-header').fadeOut('slow', function (c) {
+                            $('.cart-header').remove();
+                        });
+                    });
+                });
+            </script>
+            <div class="cart-header">
+                <div class="close1"> </div>
+                <div class="cart-sec simpleCart_shelfItem">
+                    <div class="cart-item cyc">
+                        <img src="images/pic1.jpg" class="img-responsive" alt="">
+                    </div>
+                    <div class="cart-item-info">
+                        <h3><a href="#">Mountain Hopper(XS R034)</a><span>Model No: 3578</span></h3>
+                        <ul class="qty">
+                            <li><p>Size : 5</p></li>
+                            <li><p>Qty : 1</p></li>
+                        </ul>
+
+                        <div class="delivery">
+                            <p>Service Charges : Rs.100.00</p>
+                            <span>Delivered in 2-3 bussiness days</span>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+
+                </div>
+            </div>
+            <script>
+                $(document).ready(function (c) {
+                    $('.close2').on('click', function (c) {
+                        $('.cart-header2').fadeOut('slow', function (c) {
+                            $('.cart-header2').remove();
+                        });
+                    });
+                });
+            </script>
+            <div class="cart-header2">
+                <div class="close2"> </div>
+                <div class="cart-sec simpleCart_shelfItem">
+                    <div class="cart-item cyc">
+                        <img src="images/pic2.jpg" class="img-responsive" alt="">
+                    </div>
+                    <div class="cart-item-info">
+                        <h3><a href="#">Mountain Hopper(XS R034)</a><span>Model No: 3578</span></h3>
+                        <ul class="qty">
+                            <li><p>Size : 5</p></li>
+                            <li><p>Qty : 1</p></li>
+                        </ul>
+                        <div class="delivery">
+                            <p>Service Charges : Rs.100.00</p>
+                            <span>Delivered in 2-3 bussiness days</span>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 cart-total">
+            <a class="continue" href="#">Continue to basket</a>
+            <div class="price-details">
+                <h3>Price Details</h3>
+                <span>Total</span>
+                <span class="total1">6200.00</span>
+                <span>Discount</span>
+                <span class="total1">---</span>
+                <span>Delivery Charges</span>
+                <span class="total1">150.00</span>
+                <div class="clearfix"></div>
+            </div>
+            <ul class="total_price">
+                <li class="last_price"> <h4>TOTAL</h4></li>
+                <li class="last_price"><span>6350.00</span></li>
+                <div class="clearfix"> </div>
+            </ul>
+
+
+            <div class="clearfix"></div>
+            <a class="order" href="#">Place Order</a>
+            <div class="total-item">
+                <h3>OPTIONS</h3>
+                <h4>COUPONS</h4>
+                <a class="cpns" href="#">Apply Coupons</a>
+                <p><a href="#">Log In</a> to use accounts - linked coupons</p>
+            </div>
+        </div>
+
+        <div class="clearfix"> </div>
+    </div>*@
+
+

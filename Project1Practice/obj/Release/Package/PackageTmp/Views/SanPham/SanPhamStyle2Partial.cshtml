@@ -1,0 +1,68 @@
+﻿@using Project1Practice.Models;
+@model IEnumerable<SanPham>
+
+<div class="content-top-bottom">
+    <div class="col-md-6 men">
+        <a href="@Url.Action("ChiTietSanPham","SanPham", new {@MaSP = Model.ElementAt(0).MaSP})" class="b-link-stripe b-animate-go  thickbox">
+            <img class="img-responsive1" style="height:700px;border:1px black solid;" src="@Url.Content("~/Content/HinhAnhSP/"+Model.ElementAt(0).HinhAnh)" alt="">
+            <div class="b-wrapper">
+                <h3 class="b-animate b-from-top top-in   b-delay03 ">
+                    <span>@Html.Raw(Model.ElementAt(0).MoTa)</span>
+                </h3>
+            </div>
+        </a>
+        <p><a href="@Url.Action("ChiTietSanPham","SanPham", new {@MaSP = Model.ElementAt(0).MaSP})" style="font-weight:bold; font-size:20px">@Model.ElementAt(0).TenSP</a></p>
+    </div>
+    <div class="col-md-6">
+        <div class="col-md2">
+            <div class="col-md-6 men1">
+                <a href="@Url.Action("ChiTietSanPham","SanPham", new {@MaSP = Model.ElementAt(1).MaSP})" class="b-link-stripe b-animate-go  thickbox">
+                    <img class="img-responsive1" style="height:300px;border:1px black solid" src="@Url.Content("~/Content/HinhAnhSP/"+Model.ElementAt(1).HinhAnh)" alt="">
+                    <div class="b-wrapper">
+                        <h3 class="b-animate b-from-top top-in2   b-delay03 ">
+                            <span>@Html.Raw(Model.ElementAt(1).MoTa)</span>
+                        </h3>
+                    </div>
+                </a>
+                <p><a href="@Url.Action("ChiTietSanPham","SanPham", new {@MaSP = Model.ElementAt(1).MaSP})" style="font-weight:bold; font-size:20px">@Model.ElementAt(1).TenSP</a></p>
+            </div>
+            <div class="col-md-6 men2">
+                <a href="@Url.Action("ChiTietSanPham","SanPham", new {@MaSP = Model.ElementAt(2).MaSP})" class="b-link-stripe b-animate-go  thickbox">
+                    <img class="img-responsive1" style="height:300px;border:1px black solid;" src="@Url.Content("~/Content/HinhAnhSP/"+Model.ElementAt(2).HinhAnh)" alt="">
+                    <div class="b-wrapper">
+                        <h3 class="b-animate b-from-top top-in2   b-delay03 ">
+                            <span>@Html.Raw(Model.ElementAt(2).MoTa)</span>
+                        </h3>
+                    </div>
+                </a>
+                <p><a href="@Url.Action("ChiTietSanPham","SanPham", new {@MaSP = Model.ElementAt(2).MaSP})" style="font-weight:bold; font-size:20px">@Model.ElementAt(2).TenSP</a></p>
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+        <div class="col-md2">
+            <div class="col-md-6 men1">
+                <a href="@Url.Action("ChiTietSanPham","SanPham", new {@MaSP = Model.ElementAt(3).MaSP})" class="b-link-stripe b-animate-go  thickbox">
+                    <img class="img-responsive1" style="height:300px;border:1px black solid" src="@Url.Content("~/Content/HinhAnhSP/"+Model.ElementAt(3).HinhAnh)" alt="">
+                    <div class="b-wrapper">
+                        <h3 class="b-animate b-from-top top-in2   b-delay03 ">
+                            <span>@Html.Raw(Model.ElementAt(3).MoTa)</span>
+                        </h3>
+                    </div>
+                </a>
+                <p><a href="@Url.Action("ChiTietSanPham","SanPham", new {@MaSP = Model.ElementAt(3).MaSP})" style="font-weight:bold; font-size:20px">@Model.ElementAt(3).TenSP</a></p>
+            </div>
+            <div class="col-md-6 men2">
+                <a href="@Url.Action("ChiTietSanPham","SanPham", new {@MaSP = Model.ElementAt(4).MaSP})" class="b-link-stripe b-animate-go  thickbox">
+                    <img class="img-responsive1" style="height:300px;border:1px black solid;" src="@Url.Content("~/Content/HinhAnhSP/"+Model.ElementAt(4).HinhAnh)" alt="">
+                    <div class="b-wrapper">
+                        <h3 class="b-animate b-from-top top-in2   b-delay03 ">
+                            <span>@Html.Raw(Model.ElementAt(4).MoTa)</span>
+                        </h3>
+                    </div>
+                </a>
+                <p><a href="@Url.Action("ChiTietSanPham","SanPham", new {@MaSP = Model.ElementAt(4).MaSP})" style="font-weight:bold; font-size:20px">@Model.ElementAt(4).TenSP</a></p>
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+    </div>
+</div>

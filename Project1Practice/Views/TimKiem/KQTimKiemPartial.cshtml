@@ -1,0 +1,76 @@
+﻿@using Project1Practice.Models
+@model IEnumerable<SanPham>
+
+@{ 
+    int iDem = 0; //Đếm số lượng sản phẩm trên trang
+    int iSLSP= 9; //Số lượng sản phẩm trên 1 trang
+    int iTrang = 1; //Số trang
+}
+
+<div class="col-md-9 product1">
+    @if (Model.Count() == 0)
+    {
+        <h2 style="text-align:center;font-weight:bold;color:red;">KHÔNG CÓ KẾT QUẢ TƯƠNG ỨNG</h2>
+    }
+    else
+    {
+        <h2 style="text-align:center;font-weight:bold;color:black;">KẾT QUẢ TÌM ĐƯỢC</h2>
+        <div class=" bottom-product">
+            @foreach (var item in Model)
+            {
+                if(iDem % iSLSP == 0 && iDem !=0)
+                {
+                    iTrang++;
+                }
+
+                <div class="@Url.Content("col-md-4 bottom-cd simpleCart_shelfItem Trang" +iTrang.ToString())">
+                    <div class="product-at ">
+                        <a href="@Url.Action("ChiTietSanPham","SanPham", new {@MaSP = item.MaSP})">
+                            <img class="img-responsive" style="height: 300px;margin-left:30px; margin-top:10px;border:1px black solid;" src="@Url.Content("~/Content/HinhAnhSP/"+item.HinhAnh)" alt="">
+                            <div class="pro-grid">
+                                <span class="buy-in">Đặt mua</span>
+                            </div>
+                        </a>
+                    </div>
+                    <p class="tun" style="color:black;">@item.TenSP</p>
+                    <a href="@Url.Action("ThemGioHang","GioHang", new {@MaSP = item.MaSP, @strURL = Request.Url.ToString()})" class="item_add"><p class="number item_price"><i> </i>@item.DonGia.Value.ToString("#,##") VNĐ</p></a>
+                </div>
+
+                iDem++;
+
+            }
+            <div class="clearfix"> </div>
+        </div>
+        @*<div class="dlink" style="text-align:center">
+            Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)/@Model.PageCount
+            @Html.PagedListPager(Model, page => Url.Action("KetQuaTimKiem", new { page = page, @sTuKhoa = ViewBag.TuKhoa }))
+        </div>*@
+        <div class="Trang" style="text-align: center;">
+            @for(int i = 1; i <= iTrang; i++){
+                    <a class="linkTrang" data-sotrang="@Url.Content("Trang"+i)"  href="#" style="color:#ffffff;background:#EF5F21;padding:6px 12px;">@i</a>
+                }
+        </div>
+    }
+</div>
+
+@*Cho tất cả các trang ẩn hết trừ trang 1*@
+<style>
+    .simpleCart_shelfItem{
+        display:none;
+    }
+    .Trang1{
+        display:block;
+    }
+</style>
+
+@*Xử lý khi click vào link trang thì show trang đấy*@
+<script>
+    $('.linkTrang').click(function () {
+        //Cho tất cả các trang ẩn đi
+        $(".simpleCart_shelfItem").hide();
+        //Lấy tra số trang thừ thẻ a
+        var soTrang = $(this).attr("data-sotrang");
+        //Gọi những class nào thuộc soTrang đó hiển thị
+        $("." + soTrang).show();
+    });
+</script>

@@ -1,0 +1,19 @@
+﻿@using Project1Practice.Models;
+@model IEnumerable<SanPham>
+
+<div class="content-top">
+    @foreach (var item in Model.Take(8))
+    {
+        <div class="col-md-3 grid-top">
+            <a href="@Url.Action("ChiTietSanPham","SanPham", new {@MaSP = item.MaSP})" class="b-link-stripe b-animate-go  thickbox">
+                <img class="img-responsive" style="height:400px;border:1px black solid;" src="@Url.Content("~/Content/HinhAnhSP/" +item.HinhAnh)" alt="">
+                <div class="b-wrapper">
+                    <h3 class="b-animate b-from-left    b-delay03 ">
+                        <span>@item.MoTa</span>
+                    </h3>
+                </div>
+            </a>
+            <p><a href="@Url.Action("ChiTietSanPham","SanPham", new {@MaSP = item.MaSP})" style="font-weight:bold; font-size:20px">@item.TenSP</a></p>
+        </div>
+    }
+</div>

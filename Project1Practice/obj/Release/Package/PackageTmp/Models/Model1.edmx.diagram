@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="81bd41a219a347fb9d50229dac47e08a" Name="Diagram1" ZoomLevel="95">
+        <EntityTypeShape EntityType="MangaStoreModel.BinhLuan" Width="1.5" PointX="5.25" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="MangaStoreModel.ChiTietDonDatHang" Width="1.5" PointX="8.25" PointY="2.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="MangaStoreModel.ChiTietPhieuNhap" Width="1.5" PointX="5.25" PointY="7.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="MangaStoreModel.DonDatHang" Width="1.5" PointX="6" PointY="11.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="MangaStoreModel.KhachHang" Width="1.5" PointX="3.75" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MangaStoreModel.LoaiSanPham" Width="1.5" PointX="0.75" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="MangaStoreModel.LoaiThanhVien" Width="1.5" PointX="0.75" PointY="17.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MangaStoreModel.NhaCungCap" Width="1.5" PointX="0.75" PointY="7.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="MangaStoreModel.NhaXuatBan" Width="1.5" PointX="0.75" PointY="11" IsExpanded="true" />
+        <EntityTypeShape EntityType="MangaStoreModel.PhieuNhap" Width="1.5" PointX="3" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="MangaStoreModel.SanPham" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MangaStoreModel.ThanhVien" Width="1.5" PointX="3" PointY="16.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="MangaStoreModel.Truyen" Width="1.5" PointX="0.75" PointY="13.75" IsExpanded="true" />
+        <AssociationConnector Association="MangaStoreModel.FK_BinhLuan_SanPham" ManuallyRouted="false" />
+        <AssociationConnector Association="MangaStoreModel.FK_BinhLuan_ThanhVien" ManuallyRouted="false" />
+        <AssociationConnector Association="MangaStoreModel.FK_ChiTietDonDatHang_DonDatHang" ManuallyRouted="false" />
+        <AssociationConnector Association="MangaStoreModel.FK_ChiTietDonDatHang_SanPham" ManuallyRouted="false" />
+        <AssociationConnector Association="MangaStoreModel.FK_ChiTietPhieuNhap_PhieuNhap" ManuallyRouted="false" />
+        <AssociationConnector Association="MangaStoreModel.FK_ChiTietPhieuNhap_SanPham" ManuallyRouted="false" />
+        <AssociationConnector Association="MangaStoreModel.FK_DonDatHang_KhachHang" ManuallyRouted="false" />
+        <AssociationConnector Association="MangaStoreModel.FK_KhachHang_ToTable" ManuallyRouted="false" />
+        <AssociationConnector Association="MangaStoreModel.FK_SanPham_LoaiSanPham" ManuallyRouted="false" />
+        <AssociationConnector Association="MangaStoreModel.FK_ThanhVien_ToTable" ManuallyRouted="false" />
+        <AssociationConnector Association="MangaStoreModel.FK_PhieuNhap_NhaCungCap" ManuallyRouted="false" />
+        <AssociationConnector Association="MangaStoreModel.FK_SanPham_NhaCungCap" ManuallyRouted="false" />
+        <AssociationConnector Association="MangaStoreModel.FK_SanPham_NhaXuatBan" ManuallyRouted="false" />
+        <AssociationConnector Association="MangaStoreModel.FK_SanPham_Truyen" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="MangaStoreModel.LoaiThanhVien_Quyen" Width="1.5" PointX="6" PointY="17.75" />
+        <EntityTypeShape EntityType="MangaStoreModel.Quyen" Width="1.5" PointX="3.75" PointY="22" />
+        <AssociationConnector Association="MangaStoreModel.FK_LoaiThanhVien_Quyen_LoaiThanhVien" />
+        <AssociationConnector Association="MangaStoreModel.FK_LoaiThanhVien_Quyen_Quyen" />
+        <AssociationConnector Association="MangaStoreModel.FK_Truyen_LoaiSanPham" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

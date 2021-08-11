@@ -1,0 +1,37 @@
+﻿@using Project1Practice.Models;
+@using PagedList.Mvc;
+
+@{ IEnumerable<SanPham> sp = (IEnumerable<SanPham>)ViewBag.LoaiSP;}
+@model PagedList.IPagedList<SanPham>
+
+@{
+    ViewBag.Title = "SanPham";
+    Layout = "~/Views/Layout/ProductLayout.cshtml";
+}
+@Html.Action("MenuStandeePartial", "SanPham")
+<div class="col-md-9 product1">
+    <h2 style="text-align:center;font-weight:bold;color:black;">DANH SÁCH TRUYỆN</h2>
+    <div class=" bottom-product">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-4 bottom-cd simpleCart_shelfItem">
+                <div class="product-at ">
+                    <a href="@Url.Action("ChiTietSanPham","SanPham", new {@MaSP = item.MaSP})">
+                        <img class="img-responsive" style="height: 300px;margin-left:30px; margin-top:10px;border:1px black solid;" src="@Url.Content("~/Content/HinhAnhSP/"+item.HinhAnh)" alt="">
+                        <div class="pro-grid">
+                            <span class="buy-in">Đặt mua</span>
+                        </div>
+                    </a>
+                </div>
+                <p class="tun" style="color:black;">@item.TenSP</p>
+                <a href="@Url.Action("ThemGioHang","GioHang", new {@MaSP = item.MaSP, @strURL = Request.Url.ToString()})" class="item_add"><p class="number item_price"><i> </i>@item.DonGia.Value.ToString("#,##") VNĐ</p></a>
+            </div>
+        }
+        <div class="clearfix"> </div>
+    </div>
+    <div class="dlink" style="text-align:center">
+        Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)/@Model.PageCount
+        @Html.PagedListPager(Model, page => Url.Action("SanPham", new { page = page, @MaLoaiSP = ViewBag.MaTruyen }))
+    </div>
+</div>
+

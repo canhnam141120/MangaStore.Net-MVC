@@ -1,0 +1,56 @@
+﻿@model IEnumerable<Project1Practice.Models.Truyen>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Layout/AdminLayout.cshtml";
+    //Khởi tạo control WebGrid
+    WebGrid grid = new WebGrid(source: Model, rowsPerPage: 20);
+}
+<p class="home"><a href="#">Quản lý</a> > <strong> Quản lý Truyện</strong></p>
+<br />
+<h2>QUẢN LÝ TRUYỆN</h2>
+<p>
+    @Html.ActionLink("Thêm Truyện", "TaoMoi", null, new { @class = "btn btn-warning" })
+</p>
+<br />
+<br />
+@*Thể hiện dữ liệu thông qua control WebGrid*@
+@grid.GetHtml(
+    tableStyle: "divTable",
+    headerStyle: "gridHead",
+    footerStyle: "gridFooter",
+    rowStyle: "gridRow",
+    alternatingRowStyle: "gridAltRow",
+    columns: grid.Columns(
+    grid.Column("MaTruyen", "Mã Truyện"),
+    grid.Column("TenTruyen", "Tên Bộ Truyện"),
+    grid.Column(format: p => @Html.ActionLink("Sửa", "ChinhSua", new { id = p.MaTruyen }))
+    )
+)
+
+@*Css cho từng Style của table*@
+<style>
+    .divTable {
+        width: 100%;
+        border: 1px solid black;
+    }
+
+        .divTable td {
+            border: 1px black solid;
+        }
+
+    .gridHead {
+        background-color: orange;
+    }
+
+        .gridHead > th > a {
+            color: #fff
+        }
+
+    .gridFooter {
+        font-weight: bold;
+    }
+</style>
+
+
+

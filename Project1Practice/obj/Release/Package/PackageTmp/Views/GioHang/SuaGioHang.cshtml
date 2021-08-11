@@ -1,0 +1,74 @@
+﻿@using Project1Practice.Models;
+@model ItemGioHang
+
+@{
+    ViewBag.Title = "SuaGioHang";
+    Layout = "~/Views/Layout/ProductLayout.cshtml";
+}
+
+@{
+    List<ItemGioHang> listGioHang = ViewBag.GioHang as List<ItemGioHang>;
+}
+
+
+<table class="table">
+    <tr>
+        <td>Mã SP</td>
+        <td>Tên SP</td>
+        <td>Hình ảnh</td>
+        <td>Số lượng</td>
+        <td>Đơn giá</td>
+        <td>Thành tiền</td>
+    </tr>
+    @foreach (var item in listGioHang)
+    {
+        //Sản phẩm có mã sản phẩm được chỉnh gửi từ tham số bên trang xem giỏ hàng
+        if (Model.MaSP == item.MaSP)
+        {
+            using (Html.BeginForm("CapNhatGioHang", "GioHang"))
+            {
+                <tr>
+                    <td>@item.MaSP @Html.Hidden("MaSP", item.MaSP)</td>
+                    <td>@item.TenSP</td>
+                    <td><img width="100px" height="150px" src="@Url.Content("~/Content/HinhAnhSP/" + item.HinhAnh)" /></td>
+                    <td>@Html.TextBox("SoLuong", item.SoLuong)
+                    <p id="TB_SoLuongThayDoi" style="color:red;"></p>
+                    </td>
+                    <td>@item.DonGia.ToString("#,##") VNĐ</td>
+                    <td>@item.ThanhTien.ToString("#,##") VNĐ</td>
+                    <td><input id="btnCapNhat" type="submit" value="Cập nhật" /></td>
+                    <td>@Html.ActionLink("Xóa", "XoaGioHang", new { @MaSP = item.MaSP })</td>
+                </tr>
+            }
+
+
+        }
+        else
+        {
+            <tr>
+                <td>@item.MaSP</td>
+                <td>@item.TenSP</td>
+                <td><img width="100px" height="150px" src="@Url.Content("~/Content/HinhAnhSP/" + item.HinhAnh)" /></td>
+                <td>@Html.TextBox("SoLuong", item.SoLuong)</td>
+                <td>@item.DonGia.ToString("#,##") VNĐ</td>
+                <td>@item.ThanhTien.ToString("#,##") VNĐ</td>
+            </tr>
+        }
+    }
+</table>
+
+
+<script>
+    $("#btnCapNhat").click(function () {
+        //Kiểm tra số lượng không phải là số hoặc nhỏ hơn 0
+        var SoLuong = $("#SoLuong").val();
+        if (isNaN(SoLuong) == true || SoLuong < 0) {
+            $("#TB_SoLuongThayDoi").text("Số lượng không hợp lệ!");
+            return false;
+        }
+    });
+</script>
+
+
+
+

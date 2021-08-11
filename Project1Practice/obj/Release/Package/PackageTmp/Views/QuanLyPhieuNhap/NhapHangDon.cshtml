@@ -1,0 +1,71 @@
+﻿@model Project1Practice.Models.SanPham
+
+@{
+    ViewBag.Title = "NhapHangDon";
+    Layout = "~/Views/Layout/AdminLayout.cshtml";
+}
+
+@*Bước 1: Sử dụng control datetimepicker chèn 3 file script*@
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="/resources/demos/style.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+@*Bước 2: Xây dựng 1 function để điều hướng thẻ html theo control datpicker*@
+<script>
+    $(function () {
+        $(".date").datepicker();
+    });
+</script>
+<p class="home"><a href="#">Quản lý</a> > <strong> Quản lý Phiếu Nhập</strong></p>
+<legend>Nhập hàng cho sản phẩm<b style="color:rgb(192,0,0)">  @Model.TenSP</b></legend>
+<br />
+<br />
+
+<div class="row">
+    <div class="col-md-3">
+        <div class="imgSP">
+            <img width="215" height="320" src="@Url.Content("~/Content/HinhAnhSP/"+Model.HinhAnh)" />
+        </div>
+    </div>
+    <div class="col-md-9">
+        <div class="ttSP">
+            <h3>Nhà xuất bản: @Model.NhaXuatBan.TenNXB</h3>
+            <h3>Loại sản phẩm: @Model.LoaiSanPham.TenLoai</h3>
+            <h3>Số lượng tồn: @Model.SoLuongTon</h3>
+        </div>
+    </div>
+</div>
+<br />
+<fieldset>
+    <legend>Thông tin nhập hàng</legend>
+</fieldset>
+
+@using (Html.BeginForm("NhapHangDon", "QuanLyPhieuNhap"))
+{
+    @Html.Hidden("MaSP", Model.MaSP)
+    <div class="row">
+        <div class="col-md-3">
+            @{ var listNCC = (SelectList)ViewBag.MaNCC;}
+            NCC:
+            <br />@Html.DropDownList("MaNCC", null, new { @class = "MaNCC" })
+        </div>
+        <div class="col-md-3">
+            Ngày nhập: <input name="NgayNhap" type="text" class="date" />
+        </div>
+        <div class="col-md-3">
+            Số lượng nhập: @Html.TextBox("SoLuongNhap")
+        </div>
+        <div class="col-md-3">
+            Đơn giá nhập: @Html.TextBox("DonGiaNhap")
+        </div>
+        <div class="col-md-4">
+
+        </div>
+    </div>
+    <div class="clear right" style="text-align:right">
+        <br />
+        <input type="submit" class="btn btn-warning" value="Nhập hàng" />
+    </div>
+
+}
+

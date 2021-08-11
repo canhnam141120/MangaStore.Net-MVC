@@ -1,0 +1,79 @@
+﻿@using Project1Practice.Models;
+@using PagedList.Mvc;
+
+@model PagedList.IPagedList<SanPham>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+@{
+    ViewBag.Title = "SanPham";
+    Layout = "~/Views/Layout/ProductLayout.cshtml";
+}
+@Html.Action("MenuStandeePartial", "SanPham")
+
+@using (Ajax.BeginForm("KQTimKiemPartial", "TimKiem", new AjaxOptions { UpdateTargetId = "KQTimKiem", InsertionMode = InsertionMode.Replace }))
+{
+    <div class="search" style="float:right;margin-right:100px;margin-bottom:20px;">
+        <input type="text" id="txtTimKiem" name="sTuKhoa" placeholder="Nhập tên sản phẩm" />
+        <input type="submit" id="btnTimKiem" value="Tìm" />
+    </div>
+}
+
+<div id="KQTimKiem">
+    <div class="col-md-9 product1">
+        @if (Model.Count() == 0)
+        {
+            <h2 style="text-align:center;font-weight:bold;color:red;">KHÔNG CÓ KẾT QUẢ TƯƠNG ỨNG</h2>
+        }
+        else
+        {
+            <h2 style="text-align:center;font-weight:bold;color:black;">KẾT QUẢ TÌM ĐƯỢC</h2>
+            <div class=" bottom-product">
+                @foreach (var item in Model)
+                {
+                    <div class="col-md-4 bottom-cd simpleCart_shelfItem">
+                        <div class="product-at ">
+                            <a href="@Url.Action("ChiTietSanPham","SanPham", new {@MaSP = item.MaSP})">
+                                <img class="img-responsive" style="height: 300px;margin-left:30px; margin-top:10px;border:1px black solid;" src="@Url.Content("~/Content/HinhAnhSP/"+item.HinhAnh)" alt="">
+                                <div class="pro-grid">
+                                    <span class="buy-in">Đặt mua</span>
+                                </div>
+                            </a>
+                        </div>
+                        <p class="tun" style="color:black;">@item.TenSP</p>
+                        <a href="@Url.Action("ThemGioHang","GioHang", new {@MaSP = item.MaSP, @strURL = Request.Url.ToString()})" class="item_add"><p class="number item_price"><i> </i>@item.DonGia.Value.ToString("#,##") VNĐ</p></a>
+                    </div>
+                }
+                <div class="clearfix"> </div>
+            </div>
+            <div class="dlink" style="text-align:center">
+                Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)/@Model.PageCount
+                @Html.PagedListPager(Model, page => Url.Action("KetQuaTimKiem", new { page = page, @sTuKhoa = ViewBag.TuKhoa }))
+            </div>
+        }
+
+    </div>
+</div>
+
+<style>
+    #btnTimKiem {
+        background-color: orangered;
+        color: #fff;
+        padding: 0;
+        font-size: 1.1em;
+        font-weight: 600;
+        margin-right: 0;
+        border-radius: 0;
+        -webkit-border-radius: 3px;
+        outline: none;
+        border: none;
+        cursor: pointer;
+        position: absolute;
+        left: 304px;
+        padding: 3px;
+    }
+
+    #txtTimKiem {
+        width: 300px;
+        border: 1px solid #000;
+    }
+</style>
+

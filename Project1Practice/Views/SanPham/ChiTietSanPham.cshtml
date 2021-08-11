@@ -1,0 +1,187 @@
+﻿@using Project1Practice.Models
+@using PagedList.Mvc;
+@model PagedList.IPagedList<BinhLuan>
+
+@{
+    ViewBag.Title = "ChiTietSanPham";
+    Layout = "~/Views/Layout/ProductLayout.cshtml";
+}
+@{ SanPham sp = (SanPham)ViewBag.SP;}
+
+@Html.Action("MenuStandeePartial", "SanPham")
+
+<div class="col-md-9 product-price1">
+    <div class="col-md-5 single-top">
+        <div class="flexslider">
+
+            <div class="flex-viewport" style="overflow: hidden; position: relative;">
+                <img style="height:360px;width:240px;border:1px black solid" src="@Url.Content("~/Content/HinhAnhSP/"+ sp.HinhAnh)" draggable="false">
+            </div>
+        </div>
+        <!-- FlexSlider -->
+        <script defer="" src="js/jquery.flexslider.js"></script>
+        <link rel="stylesheet" href="css/flexslider.css" type="text/css" media="screen">
+
+        <script>
+            // Can also be used with $(document).ready()
+            $(window).load(function () {
+                $('.flexslider').flexslider({
+                    animation: "slide",
+                    controlNav: "thumbnails"
+                });
+            });
+        </script>
+    </div>
+    <div class="col-md-7 single-top-in simpleCart_shelfItem">
+        <div class="single-para ">
+            <h4>@sp.TenSP</h4>
+            <div class="star-on">
+                <ul class="star-footer">
+                    <li><a href="#"><i> </i></a></li>
+                    <li><a href="#"><i> </i></a></li>
+                    <li><a href="#"><i> </i></a></li>
+                    <li><a href="#"><i> </i></a></li>
+                    <li><a href="#"><i> </i></a></li>
+                </ul>
+                <div class="review">
+                    <span>@sp.LuotBinhChon lượt bình chọn</span>
+                </div>
+                <div class="clearfix"> </div>
+            </div>
+
+            <h5 class="item_price">@sp.DonGia.Value.ToString("#,##") VNĐ</h5>
+            <p style="color:black;">
+                @sp.MoTa
+            </p>
+            <div class="available">
+
+            </div>
+
+            <a href="@Url.Action("ThemGioHang","GioHang", new {@MaSP = sp.MaSP, @strURL = Request.Url.ToString()})" class="add-cart item_add">Thêm vào giỏ hàng</a>
+            <br />
+            <br />
+            @if (Session["TaiKhoan"] != null)
+            {
+                ThanhVien tv = (ThanhVien)Session["TaiKhoan"];
+                using (Html.BeginForm("BinhChon", "SanPham"))
+                {
+                    @Html.Hidden("MaSP", sp.MaSP)
+                    <input style="margin-left:10px;" type="submit" value="Bình chọn" class="btn btn-warning" />
+                }
+            }
+            else
+            {
+                <a class="btn btn-warning" href="@Url.Action("DangNhap", "Home")">Đăng nhập để bình chọn cho sản phẩm!</a>
+            }
+
+        </div>
+    </div>
+    <div class="clearfix"> </div>
+    <!---->
+    <div class="cd-tabs is-ended">
+        <nav>
+            <ul class="cd-tabs-navigation">
+                <li><a data-content="television" href="#0" class="selected ">Số bình luận (@sp.LuotBinhLuan)</a></li>
+            </ul>
+        </nav>
+        <ul class="cd-tabs-content" style="height: auto;">
+            <li data-content="television" class="selected">
+                <div class="comments-top-top">
+                    @foreach (var item in Model)
+                    {
+                        <div class="top-comment-right" style="margin-bottom:5px;">
+                            <span style="font-size:20px; color:orange;">Thành Viên ID: @item.MaThanhVien</span> <span style="float:right;">@item.NgayBinhLuan.Value.ToString("dd/MM/yyyy h:mm tt")</span>
+                            <ul class="star-footer">
+                                <li><a href="#"><i> </i></a></li>
+                                <li><a href="#"><i> </i></a></li>
+                                <li><a href="#"><i> </i></a></li>
+                                <li><a href="#"><i> </i></a></li>
+                                <li><a href="#"><i> </i></a></li>
+                            </ul>
+                            <p>@item.NoiDungBL</p>
+                        </div>
+                    }
+
+
+                    <div class="clearfix"> </div>
+                </div>
+
+                @if (Session["TaiKhoan"] != null)
+                {
+                    ThanhVien tv = (ThanhVien)Session["TaiKhoan"];
+                    using (Html.BeginForm("BinhLuan", "SanPham"))
+                    {
+                        @Html.Hidden("MaSP", sp.MaSP)
+                        @Html.Hidden("MaThanhVien", tv.MaThanhVien)
+                        @Html.TextBox("NoiDungBL", "", new { @class = "col-md-5", @style = "height:34px;" })
+
+                        <input style="margin-left:10px;" type="submit" value="Thêm bình luận" class="btn btn-warning" />
+                    }
+                }
+                else
+                {
+                    <a class="btn btn-warning" href="@Url.Action("DangNhap", "Home")">Đăng nhập để bình luận về sản phẩm!</a>
+                }
+                <div style="text-align:center; margin-right:100px;margin-top:10px;">
+                    @if (Model.Count() != 0)
+                    {
+                        <p>Trang @(Model.PageCount< Model.PageNumber ? 0 : Model.PageNumber)/@Model.PageCount</p>
+                        @*@Html.PagedListPager(Model, page => Url.Action("ChiTietSanPham", new { page = page, MaSP = ViewBag.MaSP }))*@
+                        <div style="margin-top:5px;" class="pagination-container">
+                            <ul class="pagination1">
+                                @if (ViewBag.Page == null)
+                                {
+                                    for (int i = 1; i <= Model.PageCount; i++)
+                                    {
+                                        if (i == 1)
+                                        {
+                                            <li class="blClass" style="display:inline;">
+                                                <a style="color: #EF5F21 #ffffff;background: #ffffff; padding: 6px 12px;" href="@Url.Action("ChiTietSanPham", "SanPham",new {page = i, MaSP = ViewBag.MaSP} )">@i</a>
+                                            </li>
+                                        }
+                                        else
+                                        {
+                                            <li class="blClass" style="display:inline;">
+                                                <a style="color:#ffffff;background:#EF5F21;padding:6px 12px;" href="@Url.Action("ChiTietSanPham", "SanPham",new {page = i, MaSP = ViewBag.MaSP} )">@i</a>
+                                            </li>
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    for (int i = 1; i <= Model.PageCount; i++)
+                                    {
+                                        if (ViewBag.Page == i)
+                                        {
+                                            <li class="blClass" style="display:inline;">
+                                                <a style="color: #EF5F21 #ffffff;background: #ffffff; padding: 6px 12px;" href="@Url.Action("ChiTietSanPham", "SanPham",new {page = i, MaSP = ViewBag.MaSP} )">@i</a>
+                                            </li>
+                                        }
+                                        else
+                                        {
+                                            <li class="blClass" style="display:inline;">
+                                                <a style="color:#ffffff;background:#EF5F21;padding:6px 12px;" href="@Url.Action("ChiTietSanPham", "SanPham",new {page = i, MaSP = ViewBag.MaSP} )">@i</a>
+                                            </li>
+                                        }
+                                    }
+                                }
+
+
+                            </ul>
+                        </div>
+                    }
+                    else
+                    {<span>Sản phẩm chưa có bình luận!</span>}
+
+                </div>
+            </li>
+            <div class="clearfix"></div>
+        </ul>
+
+    </div>
+    @Html.Action("MenuBottomPartial", "SanPham");
+</div>
+
+<div class="clearfix"> </div>
+
+

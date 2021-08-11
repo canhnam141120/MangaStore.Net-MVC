@@ -1,0 +1,92 @@
+﻿@using Project1Practice.Models
+@model DonDatHang
+
+@{
+    ViewBag.Title = "DuyetDonHang";
+    Layout = "~/Views/Layout/AdminLayout.cshtml";
+}
+
+@*Bước 1: Sử dụng control datetimepicker chèn 3 file script*@
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="/resources/demos/style.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+@*Bước 2: Xây dựng 1 function để điều hướng thẻ html theo control datpicker*@
+<script>
+    $(function () {
+        $(".date").datepicker();
+    });
+</script>
+<p class="home"><a href="#">Quản lý</a> > <strong> Quản lý Đơn Đặt Hàng</strong></p>
+br>
+<legend>Thông tin đơn hàng của<b style="color:rgb(192,0,0)">  @Model.KhachHang.TenKH</b></legend>
+<br />
+<br />
+@using (Html.BeginForm())
+{
+    <div class="ChiTietDonHang table">
+        @{IEnumerable<ChiTietDonDatHang> listChiTiet = (IEnumerable<ChiTietDonDatHang>)ViewBag.ListChiTiet;}
+        <table class="table" id="table">
+            @*Phần thông tin đơn hàng*@
+            <tr>
+                <td colspan="5">
+                    <table style="width:100%;">
+                        <tr>
+                            <td>Mã đơn hàng: <b style="color:red;">@Model.MaDDH @Html.Hidden("MaDDH", Model.MaDDH)</b></td>
+                            <td>Mã khách hàng: <b style="color:red;">@Model.KhachHang.MaKH</b></td>
+                            <td>Tên khách hàng: <b style="color:red;">@Model.KhachHang.TenKH</b></td>
+                            <td>Ngày đặt: <b style="color:red;">@Model.NgayDat.Value.ToString("dd/MM/yyyy")</b> </td>
+                            <td>Ngày giao: <input name="NgayGiao" type="text" class="date" /></td>
+                            <td>Đã thanh toán: @Html.EditorFor(model => model.DaThanhToan)</td>
+                            <td>Tình trạng giao: @Html.EditorFor(model => model.TinhTrangGiaoHang)</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+
+            @*Thông tin chi tiết đơn hàng*@
+            <tr>
+                <td><b>Sản phẩm</b></td>
+                <td><b>Hình ảnh</b></td>
+                <td></td>
+                <td><b>Số lượng đặt</b></td>
+                <td><b>Đơn giá đặt</b></td>
+            </tr>
+            @foreach (var item in listChiTiet)
+            {
+        <tr>
+            <td>@item.SanPham.TenSP</td>
+            <td><img width="100" height="150" style="border:1px black solid;" src="@Url.Content("~/Content/HinhAnhSP/"+item.SanPham.HinhAnh)" /></td>
+            <td></td>
+            <td>@item.SoLuong</td>
+            <td>@item.DonGia.Value.ToString("#,##") VNĐ</td>
+        </tr>
+            }
+            <tr>
+                <td align="right" colspan="4">Tổng số lượng: @Model.ChiTietDonDatHangs.Sum(n => n.SoLuong) sản phẩm</td>
+                <td align="right" colspan="4">Tổng tiền: @Model.ChiTietDonDatHangs.Sum(n => n.SanPham.DonGia * n.SoLuong).Value.ToString("#,##") VNĐ</td>
+            </tr>
+        </table>
+        <br /> <br />
+        <input type="button" value="In đơn hàng" id="btnInDonHang" />
+        <input type="submit" value="Lưu đơn hàng" id="btnLuuDonHang" />
+    </div>
+}
+
+<script>
+    $("#btnInDonHang").click(function () {
+        var content = "<table>" + $("#table").html() + "</table>";
+        InDonHang(content);
+    });
+
+    function InDonHang(content) {
+        var printWindown = window.open('', '', 'height=800,width=1000');
+        printWindown.document.write('<html><head><title>DIV Contents </title>');
+        printWindown.document.write('</head><body>');
+        printWindown.document.write(content);
+        printWindown.document.write('</body></html>');
+        printWindown.document.close();
+        printWindown.print();
+    }
+</script>
+
